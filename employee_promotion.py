@@ -7,12 +7,18 @@ from sklearn.preprocessing import StandardScaler
 
 @st.cache_resource
 @st.cache_resource
+@st.cache_resource
 def load_model():
     import os
-    st.write("الملفات الموجودة في الـ folder:", os.listdir('.'))  # <-- سطر جديد عشان نشوف الفايلات
+    files = os.listdir('.')
+    st.write("الملفات الموجودة:", files)  # <-- سطر جديد عشان نشوف إيه موجود
+
+    if 'employee_promotion_model.json' not in files:
+        st.error("الملف employee_promotion_model.json مش موجود! الملفات الموجودة: " + str(files))
+        st.stop()
 
     booster = xgb.Booster()
-    booster.load_model('employee_promotion_model.json')  # أو غيري الاسم لللي هيطلع في القائمة
+    booster.load_model('employee_promotion_model.json')
     model = xgb.XGBClassifier()
     model._Booster = booster
     return model
