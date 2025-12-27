@@ -6,9 +6,13 @@ import pickle
 from sklearn.preprocessing import StandardScaler
 
 @st.cache_resource
+@st.cache_resource
 def load_model():
+    import os
+    st.write("الملفات الموجودة في الـ folder:", os.listdir('.'))  # <-- سطر جديد عشان نشوف الفايلات
+
     booster = xgb.Booster()
-    booster.load_model('employee_promotion_model.json')
+    booster.load_model('employee_promotion_model.json')  # أو غيري الاسم لللي هيطلع في القائمة
     model = xgb.XGBClassifier()
     model._Booster = booster
     return model
